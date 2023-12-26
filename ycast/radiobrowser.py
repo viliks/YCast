@@ -8,8 +8,9 @@ import logging
 from ycast import __version__, my_filter
 import ycast.vtuner as vtuner
 import ycast.generic as generic
-from ycast.my_filter import check_station, begin_filter, end_filter, get_limit 
+from ycast.my_filter import check_station, begin_filter, end_filter, get_limit
 from ycast.generic import get_json_attr
+from unidecode import unidecode
 
 API_ENDPOINT = "http://all.api.radio-browser.info"
 ID_PREFIX = "RB"
@@ -22,14 +23,14 @@ class Station:
         self.stationuuid = generic.get_json_attr(station_json, 'stationuuid')
         self.id = generic.generate_stationid_with_prefix(
             base64.urlsafe_b64encode(uuid.UUID(self.stationuuid).bytes).decode(), ID_PREFIX)
-        self.name = generic.get_json_attr(station_json, 'name')
+        self.name = unidecode(generic.get_json_attr(station_json, 'name'))
 
         self.url = generic.get_json_attr(station_json, 'url_resolved')
         if not self.url:
             self.url = generic.get_json_attr(station_json, 'url')
 
         self.icon = generic.get_json_attr(station_json, 'favicon')
-        self.description = generic.get_json_attr(station_json, 'tags')
+        self.description = unidecode(generic.get_json_attr(station_json, 'tags'))
         self.tags = generic.get_json_attr(station_json, 'tags').split(',')
         self.countrycode = generic.get_json_attr(station_json, 'countrycode')
         self.language = generic.get_json_attr(station_json, 'language')
