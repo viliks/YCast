@@ -12,7 +12,7 @@ from ycast.my_filter import check_station, begin_filter, end_filter, get_limit
 from ycast.generic import get_json_attr
 from unidecode import unidecode
 
-API_ENDPOINT = "http://all.api.radio-browser.info"
+API_ENDPOINT = "http://de1.api.radio-browser.info"
 ID_PREFIX = "RB"
 
 station_cache = {}
