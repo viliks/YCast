@@ -22,6 +22,7 @@ def launch_server():
     parser.add_argument('-l', action='store', dest='address', help='Listen address', default='0.0.0.0')
     parser.add_argument('-p', action='store', dest='port', type=int, help='Listen port', default=80)
     parser.add_argument('-d', action='store_true', dest='debug', help='Enable debug logging')
+    parser.add_argument('--var-path', action='store', dest='var_path', help='Custom VAR_PATH', default=None)
     arguments = parser.parse_args()
     logging.info("YCast (%s) server starting", __version__)
     if arguments.debug:
@@ -32,7 +33,7 @@ def launch_server():
 
     # initialize important ycast parameters
     from ycast.generic import init_base_dir
-    init_base_dir('/.ycast')
+    init_base_dir('/.ycast', arguments.var_path)
     from ycast.my_filter import init_filter_file
     init_filter_file()
 
